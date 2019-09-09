@@ -1,6 +1,6 @@
 ---
 title: "Lab 2"
-author: "Shawn Santo"
+author: "Daniel Deng"
 date: "09/09/2019"
 output: 
   html_document:
@@ -20,6 +20,7 @@ Load `rjson` with
 
 ```{r}
 library(rjson)
+library(stringr)
 ```
 
 # U.S. senators
@@ -40,15 +41,39 @@ senators <- fromJSON(paste(readLines(json_file), collapse = ""))
 #### Task 1
 
 Print the structure for the first senator, Lamar Alexander, in the list.
+```{r}
+str(senators$objects[[1]])
+```
+
+
 
 #### Task 2
 
 Extract the birthday for each North Carolina senator.
 
+```{r}
+objects = senators$objects
+for (i in 1:100){
+  if (str_detect(objects[[i]]$description, "North Carolina")){
+    print(objects[[i]]$person$birthday)
+  }
+}
+```
+
+
 #### Task 3
 
 Write a loop that prints the twitter ID for each senator in the leadership, i.e.
 where `leadership_title` is not null.
+
+```{r}
+for (i in 1:100){
+  if (!is.null(objects[[i]]$leadership_title)){
+    print(objects[[i]]$person$twitterid)
+  }
+}
+```
+
 
 # Command line
 
